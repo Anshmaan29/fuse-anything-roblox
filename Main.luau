@@ -1,0 +1,20 @@
+local storage = game:GetService("ReplicatedStorage")
+local services = script.Parent.Services
+local Pickup = require(services.PickupService)
+local Round = require(services.RoundService)
+local Data = require(services.DataService)
+local Retention = require(services.RetentionService)
+local Shop = require(services.MonetizationService)
+local Funnel = require(services.FunnelService)
+local CreatureLab = require(services.CreatureLabService)
+local Progression = require(services.ProgressionService)
+
+Pickup.BuildAssets()
+Data.Start()
+Funnel.Start()
+CreatureLab.Start()
+Progression.Start()
+local remotes = storage.Shared.Remotes
+Retention.Start(remotes.Progress)
+Shop.Start(remotes.Shop,Round)
+Round.Run(remotes.Action,remotes.Duo,Retention,Data.Award)
